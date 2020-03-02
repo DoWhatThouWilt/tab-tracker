@@ -7,24 +7,34 @@
     <input type="password" mame="password" v-model="password" placeholder="password" />
     <br />
     <button @click="register">Register</button>
+    <br>
+    <div class="error" v-html="error" />
+    <br>
   </div>
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService'
+/*eslint no-unused-vars: "off"*/
+
+import AuthenticationService from "@/services/AuthenticationService";
 export default {
   data() {
     return {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: "",
+      error: null
+    };
   },
   methods: {
     async register() {
-      const response = await AuthenticationService.register({
-        email: this.email,
-        password: this.password
-      })
+      try {
+        await AuthenticationService.register({
+          email: this.email,
+          password: this.password
+        });
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     }
   }
 };
@@ -32,4 +42,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.error {
+  color: firebrick;
+}
 </style>
