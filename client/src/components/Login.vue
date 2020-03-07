@@ -2,7 +2,7 @@
   <v-row align="start" justify="center">
     <v-col cols="6">
       <v-card class="white elevation-6">
-        <v-toolbar flat dense color="orange" dark>
+        <v-toolbar flat dense color="red lighten-2" dark>
           <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
@@ -28,7 +28,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn x-large color="orange" dark @click="register">Login</v-btn>
+          <v-btn x-large color="red lighten-2" dark @click="login">Login</v-btn>
         </v-card-actions>
         <div class="error" v-html="error" />
       </v-card>
@@ -49,9 +49,9 @@ export default {
     };
   },
   methods: {
-    async register() {
+    async login() {
       try {
-        await AuthenticationService.register({
+        await AuthenticationService.login({
           email: this.email,
           password: this.password
         });
