@@ -3,7 +3,7 @@
     <v-col cols="6">
       <v-card class="white elevation-6">
         <v-toolbar flat dense color="red lighten-2" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar-title>Sign In</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <v-form>
@@ -51,10 +51,12 @@ export default {
   methods: {
     async login() {
       try {
-        await AuthenticationService.login({
+        const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
-        });
+        })
+        this.$store.dispatch('fetchToken', response.data.token)
+        this.$store.dispatch('fetchUser', response.data.user)
       } catch (error) {
         this.error = error.response.data.error;
       }

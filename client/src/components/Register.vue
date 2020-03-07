@@ -28,7 +28,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn x-large color="orange" dark @click="register">Login</v-btn>
+          <v-btn x-large color="orange" dark @click="register">Submit</v-btn>
         </v-card-actions>
         <div class="error" v-html="error" />
       </v-card>
@@ -50,11 +50,13 @@ export default {
   },
   methods: {
     async register() {
-      try {
-        await AuthenticationService.register({
+       try {
+        const response = await AuthenticationService.register({
           email: this.email,
           password: this.password
-        });
+        })
+        this.$store.dispatch('fetchToken', response.data.token)
+        this.$store.dispatch('fetchUser', response.data.user)
       } catch (error) {
         this.error = error.response.data.error;
       }
